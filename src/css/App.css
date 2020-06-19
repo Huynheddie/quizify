@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Arimo');
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700');
 
 #root {
     height: 100%;
@@ -7,7 +8,7 @@
 
 html {
     height: 100%;
-    background-image: linear-gradient(#3D3D3D, #131111);
+    background-color: #3D3D3D;
     font-family: "Fredoka One";
 }
 
@@ -34,14 +35,14 @@ body {
     font-size: 80px;
     /* margin-bottom: 10px; */
     color: #1ED760;
-    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+    text-shadow: 2px 0 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000;
 }
 
 .login-btn {
     margin-top: 15px;
     background-color: #1ED760;
     text-align: center;
-    border: 2px solid #1D7F2D;
+    border: 2px solid #020803;
     font-size: 25px;
     font-family: "Fredoka One";
     border-radius: 60px;
