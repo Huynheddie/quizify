@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 // import Spotify from 'spotify-web-api-js';
 import SpotifyWebApi from 'spotify-web-api-js';
-import AUTHZ_CREDENTIALS from './utils/config';
+import CREDENTIALS from './utils/config';
 // import axios from 'axios';
 import './css/App.css';
+import logo from './images/spotify.png'
 
 function App() {
   const authEndpoint = 'https://accounts.spotify.com/authorize';
-  const clientId = AUTHZ_CREDENTIALS.CLIENT_ID;
-  const redirectUri = AUTHZ_CREDENTIALS.REDIRECT_URI;
+  const { CLIENT_ID, REDIRECT_URI } = CREDENTIALS;
   const scopes = [
     'user-read-private'
   ];
@@ -45,22 +45,29 @@ function App() {
   }, [token])
 
   const handleLogin = () => {
-    window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
+    window.location = `${authEndpoint}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
   }
 
   return (
-    <div className="App">
-     <h1>Hello World</h1>
-     <button type="login" onClick={handleLogin}>Login</button>
-     
-     { user !== null && 
+    <div style={{textAlign: "center", height: "100%"}}>
+    
+      <div className="login-page">
+        <div className="banner">
+          <h1 className="banner-text">Quizify</h1>
+          <img style={{paddingLeft: "30px"}} alt="logo" src={logo} width="100" height="100"/> 
+        </div>
+        <button className="login-btn" type="login" onClick={handleLogin}>Login</button>
+      </div>
+
+      
+      { user !== null && 
       <div>
         <h2>{user.display_name}</h2>
         <h2>{user.id}</h2>
-        <img src={user.images[0].url}/>
+        <img alt="profile" src={user.images[0].url}/>
         <h3>Followers: {user.followers.total}</h3>
       </div>
-     }
+      }
      
     </div>
   );
