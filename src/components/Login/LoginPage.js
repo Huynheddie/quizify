@@ -3,18 +3,11 @@ import logo from '../../images/spotify.png';
 import CREDENTIALS from '../../utils/config';
 
 const LoginPage = (props) => {
-    useEffect(() => {
-        document.title="Login";      
-    }, []);
-
     const authEndpoint = 'https://accounts.spotify.com/authorize';
-    const { CLIENT_ID, REDIRECT_URI } = CREDENTIALS;
-    const scopes = [
-        'user-read-private'
-    ];
+    const { CLIENT_ID, REDIRECT_URI, SCOPES } = CREDENTIALS;
 
     const handleLogin = () => {
-        window.location = `${authEndpoint}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${scopes.join('%20')}&response_type=token&show_dialog=true`;
+        window.location = `${authEndpoint}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${SCOPES.join('%20')}&response_type=token&show_dialog=true`;
     }
 
     return (

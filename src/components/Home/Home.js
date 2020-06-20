@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react';
 import UserInfo from './UserInfo';
 import ArtistSearch from './ArtistSearch';
 import '../../css/Home.css';
+import SpotifyWebApi from 'spotify-web-api-js';
 
-const Home = ({ spotifyApi }) => {
+const Home = (props) => {
     const [user, setUser] = useState();
+    const token = sessionStorage.getItem("access_token");
+    const spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(token);
 
     useEffect(() => {
-        document.title="Quizify"
         spotifyApi.getMe().then((response) => {
-            console.log(response);
+            // console.log(response);
             setUser(response);
         })
     }, []);
@@ -17,7 +20,7 @@ const Home = ({ spotifyApi }) => {
     return (
         <div style={{height: "100%"}}>
             <UserInfo user={user} />
-            <ArtistSearch spotifyApi={spotifyApi} />
+            <ArtistSearch />
         </div>
     )
 }

@@ -46,7 +46,7 @@ h1 {
 
 .artist-grid {
     display: flex;
-    justify-content: end;
+    justify-content: flex-start;
     flex-wrap: wrap;
     font-family: "Montserrat";
     color: white;

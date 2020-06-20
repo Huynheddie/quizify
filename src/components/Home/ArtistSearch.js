@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import Artists from './Artists';
+import SpotifyWebApi from 'spotify-web-api-js';
 
-const ArtistSearch = ({ spotifyApi }) => {
+const ArtistSearch = (props) => {
+    const token = sessionStorage.getItem("access_token");
+    const spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(token);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [artists, setArtists] = useState([]);
@@ -13,7 +17,7 @@ const ArtistSearch = ({ spotifyApi }) => {
     const handleSearchSubmit = (event) => {
         event.preventDefault();
         spotifyApi.search(searchTerm, ['artist'], { limit: 5}).then((response) => {
-            console.log(response.artists.items);
+            // console.log(response.artists.items);
             setArtists(response.artists.items);
         })
     }
