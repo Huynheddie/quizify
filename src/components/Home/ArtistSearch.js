@@ -7,7 +7,7 @@ const ArtistSearch = (props) => {
     const spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(token);
 
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState('ill');
     const [artists, setArtists] = useState([]);
 
     const handleSearchTerm = (event) => {
@@ -17,7 +17,6 @@ const ArtistSearch = (props) => {
     const handleSearchSubmit = (event) => {
         event.preventDefault();
         spotifyApi.search(searchTerm, ['artist'], { limit: 5}).then((response) => {
-            // console.log(response.artists.items);
             setArtists(response.artists.items);
         })
     }
@@ -30,6 +29,7 @@ const ArtistSearch = (props) => {
                        value={searchTerm} 
                        onChange={handleSearchTerm}
                 />
+                {/* <button>Submit</button> */}
             </form>
             
             <Artists artists={artists} />
