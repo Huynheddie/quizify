@@ -119,7 +119,7 @@ const GamePage = (props) => {
 
             {songs &&
                 <div>
-                    <SpotifyWebPlayer isPlaying={isPlaying} songs={songs.map(song => song.uri)} token={token} handleCallback={handleCallback} />
+                    <SpotifyWebPlayer songs={songs.map(song => song.uri)} token={token} handleCallback={handleCallback} />
                 </div>
             }
             
