@@ -14,10 +14,19 @@ const App = (props) => {
     document.title="Quizify"
     const urlParams = new URLSearchParams(window.location.search);
     const access_token = urlParams.get("access_token");
+
+    const access_token_ls = JSON.parse(localStorage.getItem("access_token"));
+    // console.log(localStorage.getItem("access_token"));
     
     if (access_token) {
       setIsLoggedIn(true);
-      sessionStorage.setItem("access_token", access_token);
+      // sessionStorage.setItem("access_token", access_token);
+      localStorage.setItem("access_token", JSON.stringify(access_token));
+      props.history.push("/");
+    }
+
+    if (access_token_ls) {
+      setIsLoggedIn(true);
       props.history.push("/");
     }
   }, []);

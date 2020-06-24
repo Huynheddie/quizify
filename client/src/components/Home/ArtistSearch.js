@@ -1,14 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Artists from './Artists';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 const ArtistSearch = (props) => {
-    const token = sessionStorage.getItem("access_token");
+    // const token = sessionStorage.getItem("access_token");
     const spotifyApi = new SpotifyWebApi();
-    spotifyApi.setAccessToken(token);
 
-    const [searchTerm, setSearchTerm] = useState('ill');
+    const [searchTerm, setSearchTerm] = useState('');
     const [artists, setArtists] = useState([]);
+    const [token, setToken] = useState();
+
+    useEffect(() => {
+        // const token = sessionStorage.getItem("access_token");
+        const token = JSON.parse(localStorage.getItem("access_token"));
+        setToken(token);
+    }, []);
+
+    useEffect(() => {
+        if (token) {
+            spotifyApi.setAccessToken(token);
+        }
+    }, [token]);
+
+    useEffect(() => {
+        if (searchTerm) {
+            spotifyApi.search(searchTerm, ['artist'], { limit: 15}).then((response) => {
+                setArtists(response.artists.items);
+            });
+        }
+    }, [searchTerm]);
 
     const handleSearchTerm = (event) => {
         setSearchTerm(event.target.value);
@@ -16,9 +36,11 @@ const ArtistSearch = (props) => {
 
     const handleSearchSubmit = (event) => {
         event.preventDefault();
-        spotifyApi.search(searchTerm, ['artist'], { limit: 5}).then((response) => {
-            setArtists(response.artists.items);
-        })
+        if (searchTerm) {
+            spotifyApi.search(searchTerm, ['artist'], { limit: 6}).then((response) => {
+                setArtists(response.artists.items);
+            });
+        }
     }
     
     return ( 
@@ -29,7 +51,6 @@ const ArtistSearch = (props) => {
                        value={searchTerm} 
                        onChange={handleSearchTerm}
                 />
-                {/* <button>Submit</button> */}
             </form>
             
             <Artists artists={artists} />

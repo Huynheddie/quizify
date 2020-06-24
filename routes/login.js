@@ -13,7 +13,7 @@ router.get('/login', function(req, res) {
         client_id: process.env.SPOTIFY_CLIENT_ID,
         scope: config.SCOPES.join(','),
         redirect_uri,
-        show_dialog: 'true'
+        // show_dialog: 'true'
     }))
 })
   

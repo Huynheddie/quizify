@@ -1,27 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import SpotifyWebPlayer from './SpotifyWebPlayer';
 import Timer from './Timer';
+import { withRouter } from 'react-router-dom';
 
 const GamePage = (props) => {
-    const token = sessionStorage.getItem("access_token");
+    const SLEEP_TIMER = 1000;
+    const GAME_TIMER = 10000;
     const spotifyApi = new SpotifyWebApi();
-    spotifyApi.setAccessToken(token);
 
     const [songs, setSongs] = useState([]);    
     const [currentSong, setCurrentSong] = useState();
     const [score, setScore] = useState(0);
     const [gameChoices, setGameChoices] = useState([]);
     const [webPlayerActive, setWebPlayerActive] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [correctChoice, setCorrectChoice] = useState(-1);
+    const [showAnswers, setShowAnswers] = useState(false);
+    const [pauseTimer, setPauseTimer] = useState(false);
+    const [token, setToken] = useState();
+
+    const loadedRef = useRef(false);
     
     useEffect(() => {
+        // const token = sessionStorage.getItem("access_token");
+        const token = JSON.parse(localStorage.getItem("access_token"));
+        setToken(token);
         const artist = props.location.state.artistSelection;
         getSongs(artist);
     }, []);
 
+    useEffect(() => {
+        if (token) {
+            spotifyApi.setAccessToken(token);
+        }
+    }, [token]);
+
     async function getSongs(artist) {
-        let artistAlbums = await spotifyApi.getArtistAlbums(artist.id, { limit: 5 });
+        let artistAlbums = await spotifyApi.getArtistAlbums(artist.id, { limit: 10 });
         let allTracks = [];
 
         for (const album of artistAlbums.items) {
@@ -49,11 +64,12 @@ const GamePage = (props) => {
         return songs;
     }
 
-    useEffect(() => {
+    useEffect(() => { 
         if (songs && currentSong) {
+            console.log(currentSong);
             startGame();
         }
-    }, [songs, currentSong]);
+    }, [currentSong]);
 
     const startGame = () => {
         let randomChoices = [-1, -1, -1, -1];
@@ -74,9 +90,13 @@ const GamePage = (props) => {
             }
         }
 
+        console.log("Random choice indices: ", randomChoices);
         randomChoices = randomChoices.map(index => songs[index]);
         randomChoices[correctIndex] = songs[currentSong.index];
-
+        console.log("Random choice songs: ", randomChoices.map(song => song.name));
+        console.log(`Correct choice at index ${correctIndex}, song ${randomChoices[correctIndex].name}`)
+        // console.log(songs);
+        setCorrectChoice(correctIndex);
         setGameChoices(randomChoices);
     }
 
@@ -84,32 +104,53 @@ const GamePage = (props) => {
         if (gameChoices[index].name === currentSong.song.name) {
             setScore(score + 1);
         } 
-        spotifyApi.skipToNext();
+
+        await setShowAnswers(true);
+        await setPauseTimer(true);
+        await sleep(SLEEP_TIMER);
+        setShowAnswers(false); 
+        setPauseTimer(false);
 
         if (currentSong.index >= songs.length - 1) {
-            let nextSong = await spotifyApi.getTrack(songs[0].id);
-            setCurrentSong({song: nextSong, index: 0})
+            await goToNextSong(0);
         } else {
-            let nextSong = await spotifyApi.getTrack(songs[currentSong.index + 1].id);
-            setCurrentSong({song: nextSong, index: currentSong.index + 1});
+            await goToNextSong(currentSong.index + 1);
         }
-        
-        startGame();
     }
+
+    const goToNextSong = async (index) => {
+        let nextSong = await spotifyApi.getTrack(songs[index].id);
+        setCurrentSong({song: nextSong, index: index});
+        let currentPlayback = await spotifyApi.getMyCurrentPlayingTrack();
+        if (currentPlayback.item.duration_ms > 70000) {
+            spotifyApi.play({uris: [songs[index].uri], position_ms: 35000});
+        } else {
+            spotifyApi.play({uris: [songs[index].uri]});
+        }
+    }
+
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
     const handleCallback = async (event) => {
+        console.log(event);
         await setWebPlayerActive(event.isActive);
-        // let currentPlayback = await spotifyApi.getMyCurrentPlaybackState();
-        // if (event.isActive && currentPlayback) {
-        //     setTimeout(() => {
-        //         spotifyApi.seek(35000);
-        //     }, 100); 
-        // }
+        if (event.isActive) {
+            if (!loadedRef.current) {
+                let currentPlayback = await spotifyApi.getMyCurrentPlayingTrack();
+                if (currentPlayback.item.duration_ms > 70000) {
+                    setTimeout(() => {
+                        spotifyApi.seek(35000);
+                    }, 250); 
+                }
+                loadedRef.current = true;
+            }
+        }
     }
 
-    // const clickPlay = () => {
-    //     setIsPlaying(true);
-    // }
+    const handleQuit = (event) => {
+        // props.history.push('/');
+        window.location.assign('/');
+    }
 
     return ( 
         <div style={{fontFamily: "Montserrat", height: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -119,30 +160,27 @@ const GamePage = (props) => {
 
             {songs &&
                 <div>
-                    <SpotifyWebPlayer isPlaying={isPlaying} songs={songs.map(song => song.uri)} token={token} handleCallback={handleCallback} />
+                    <SpotifyWebPlayer songs={songs.map(song => song.uri)} token={token} handleCallback={handleCallback} />
                 </div>
             }
             
             { currentSong && webPlayerActive && [
+                <button key="quit" onClick={handleQuit}>Quit</button>,
                 <h1 key="score">Score: {score}</h1>,
                 <h1 key="answer">Current song: {currentSong.song.name}</h1>,
-                <Timer key="timer" seconds={120} />,
+                <Timer key="timer" seconds={GAME_TIMER} token={token} pauseTimer={pauseTimer} sleep={sleep} SLEEP_TIMER={SLEEP_TIMER} />,
                 <img key="album-cover" className="album-cover" src={currentSong.song.album.images[0].url} alt="album" />            
             ]}
 
-            {/* <button onClick={clickPlay}>play</button> */}
-
             { gameChoices.length > 0 && webPlayerActive &&
                 <div className="game-interface">
-                    <button onClick={() => handleGameButton(0)} className="game-btn">{gameChoices[0].name}</button>
-                    <button onClick={() => handleGameButton(1)} className="game-btn">{gameChoices[1].name}</button>
-                    <button onClick={() => handleGameButton(2)} className="game-btn">{gameChoices[2].name}</button>
-                    <button onClick={() => handleGameButton(3)} className="game-btn">{gameChoices[3].name}</button>                
+                    {
+                        [0,1,2,3].map(index => <button key={index} onClick={() => handleGameButton(index)} className={`game-btn ${showAnswers === true ? correctChoice === index ? 'game-btn-correct' : 'game-btn-incorrect' : '' }`}>{gameChoices[index].name}</button> )
+                    }
                 </div>
             }
-
         </div>
     );
 }
  
-export default GamePage;
+export default withRouter(GamePage);

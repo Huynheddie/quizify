@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import SpotifyWebApi from 'spotify-web-api-js';
+
 
 const Timer = (props) => {
     const [time, setTime] = useState(props.seconds);
     const [timerInterval, setTimerInterval] = useState();
+    let spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(props.token);
 
     useEffect(() => {
         setTimerInterval(setInterval(() => {
@@ -18,7 +22,28 @@ const Timer = (props) => {
             console.log('Game ended!');
             props.history.push('/');
         }
+
+        async function timerSleep() {
+            if (props.pauseTimer) {
+                clearInterval(timerInterval);
+    
+                await props.sleep(props.SLEEP_TIMER);
+    
+                setTimerInterval(setInterval(() => {
+                        setTime(seconds => seconds - 1);
+                    }, 1000)
+                );
+            }
+        }
+        timerSleep();
     }, [time]);
+
+
+    useEffect(() => {
+        return () => {
+            clearInterval(timerInterval);
+        }
+    }, [timerInterval]);
 
     const formatTime = (time) => {
         let seconds = time % 60;

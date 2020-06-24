@@ -3,19 +3,33 @@ import UserInfo from './UserInfo';
 import ArtistSearch from './ArtistSearch';
 import '../../css/Home.css';
 import SpotifyWebApi from 'spotify-web-api-js';
+import { withRouter } from 'react-router-dom';
 
 const Home = (props) => {
     const [user, setUser] = useState();
-    const token = sessionStorage.getItem("access_token");
-    const spotifyApi = new SpotifyWebApi();
-    spotifyApi.setAccessToken(token);
+    const [token, setToken] = useState();
+    const spotifyApi = new SpotifyWebApi();   
 
     useEffect(() => {
-        spotifyApi.getMe().then((response) => {
-            // console.log(response);
-            setUser(response);
-        })
+        // const token = sessionStorage.getItem("access_token");
+        const token = JSON.parse(localStorage.getItem("access_token"));
+        if (token === null) {
+            console.log('huh')
+            props.history.push('/');
+        }
+        setToken(token);
+        console.log('Rendered home')
     }, []);
+
+    useEffect(() => {
+        if (token) {
+            spotifyApi.setAccessToken(token);
+            spotifyApi.getMe().then((response) => {
+                setUser(response);
+            });
+        }
+        
+    }, [token]);
 
     return (
         <div style={{height: "100%"}}>
@@ -25,4 +39,4 @@ const Home = (props) => {
     )
 }
 
-export default Home;
+export default withRouter(Home);

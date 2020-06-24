@@ -14,7 +14,7 @@ const LoginPage = (props) => {
                 <h1 className="banner-text">Quizify</h1>
                 <img style={{paddingLeft: "30px"}} alt="logo" src={logo} width="100" height="100"/> 
             </div>
-            <button className="login-btn" type="login" onClick={handleLogin}>Login</button>
+            <button className="login-btn" type="login" onClick={handleLogin}>Login with Spotify</button>
         </div>
     )
 }
