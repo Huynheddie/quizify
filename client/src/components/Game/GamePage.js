@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import SpotifyWebPlayer from './SpotifyWebPlayer';
+import Timer from './Timer';
 
 const GamePage = (props) => {
     const token = sessionStorage.getItem("access_token");
@@ -12,6 +13,7 @@ const GamePage = (props) => {
     const [score, setScore] = useState(0);
     const [gameChoices, setGameChoices] = useState([]);
     const [webPlayerActive, setWebPlayerActive] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
     
     useEffect(() => {
         const artist = props.location.state.artistSelection;
@@ -96,14 +98,18 @@ const GamePage = (props) => {
     }
 
     const handleCallback = async (event) => {
-        // console.log(event);
         await setWebPlayerActive(event.isActive);
-        if (event.isActive) {
-            setTimeout(() => {
-                spotifyApi.seek(35000);
-            }, 100); 
-        }
+        // let currentPlayback = await spotifyApi.getMyCurrentPlaybackState();
+        // if (event.isActive && currentPlayback) {
+        //     setTimeout(() => {
+        //         spotifyApi.seek(35000);
+        //     }, 100); 
+        // }
     }
+
+    // const clickPlay = () => {
+    //     setIsPlaying(true);
+    // }
 
     return ( 
         <div style={{fontFamily: "Montserrat", height: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -113,15 +119,18 @@ const GamePage = (props) => {
 
             {songs &&
                 <div>
-                    <SpotifyWebPlayer songs={songs.map(song => song.uri)} token={token} handleCallback={handleCallback} />
+                    <SpotifyWebPlayer isPlaying={isPlaying} songs={songs.map(song => song.uri)} token={token} handleCallback={handleCallback} />
                 </div>
             }
             
             { currentSong && webPlayerActive && [
                 <h1 key="score">Score: {score}</h1>,
                 <h1 key="answer">Current song: {currentSong.song.name}</h1>,
+                <Timer key="timer" seconds={120} />,
                 <img key="album-cover" className="album-cover" src={currentSong.song.album.images[0].url} alt="album" />            
             ]}
+
+            {/* <button onClick={clickPlay}>play</button> */}
 
             { gameChoices.length > 0 && webPlayerActive &&
                 <div className="game-interface">

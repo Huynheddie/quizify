@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { Switch, Route, withRouter } from "react-router-dom";
-import SpotifyWebApi from 'spotify-web-api-js';
 import Home from './components/Home/Home';
 import PrivateRoute from './components/Routes/PrivateRoute';
 import LoginPage from './components/Login/LoginPage';
@@ -9,7 +8,6 @@ import './css/App.css';
 
 
 const App = (props) => {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useLayoutEffect(() => {
@@ -19,7 +17,6 @@ const App = (props) => {
     
     if (access_token) {
       setIsLoggedIn(true);
-      // spotifyApi.setAccessToken(hash.access_token);
       sessionStorage.setItem("access_token", access_token);
       props.history.push("/");
     }
