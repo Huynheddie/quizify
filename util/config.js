@@ -6,6 +6,7 @@ let AUTHZ_CREDENTIALS = {
              'user-modify-playback-state',
              'streaming',
              'user-read-email',
+             'user-top-read',
             ]
 };
 

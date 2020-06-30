@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { Switch, Route, withRouter } from "react-router-dom";
 import Home from './components/Home/Home';
 import PrivateRoute from './components/Routes/PrivateRoute';

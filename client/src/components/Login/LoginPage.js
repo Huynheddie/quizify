@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import logo from '../../images/spotify.png';
-import Axios from 'axios';
 
 const LoginPage = (props) => {
 

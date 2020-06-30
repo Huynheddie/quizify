@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import SpotifyWebApi from 'spotify-web-api-js';
 
-
 const Timer = (props) => {
     const [time, setTime] = useState(props.seconds);
     const [timerInterval, setTimerInterval] = useState();
