@@ -4,7 +4,7 @@ import logo from '../../images/spotify.png';
 const LoginPage = (props) => {
 
     const handleLogin = () => {
-        window.location = 'http://localhost:3001/login';
+        window.location = 'https://quizify-backend.herokuapp.com/login';
     }
 
     return (

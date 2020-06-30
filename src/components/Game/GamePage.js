@@ -8,7 +8,7 @@ import GameDisplay from './GameDisplay';
 
 const GamePage = (props) => {
     const SLEEP_TIMER = 2000;
-    const GAME_TIMER = 5;
+    const GAME_TIMER = 60;
     const spotifyApi = new SpotifyWebApi();
 
     const [token, setToken] = useState();
@@ -18,6 +18,7 @@ const GamePage = (props) => {
     const [gameChoices, setGameChoices] = useState([]);
     const [correctChoice, setCorrectChoice] = useState(-1);
     const [showAnswers, setShowAnswers] = useState(false);
+    const [buttonsDisabled, setButtonsDisabled] = useState(false);
     const [webPlayerActive, setWebPlayerActive] = useState(false);
     const [pauseTimer, setPauseTimer] = useState(false);
 
@@ -138,12 +139,16 @@ const GamePage = (props) => {
     }
 
     const handlePlayAgain = () => {
-        window.location.assign(`${process.env.PUBLIC_URL}/play/${artistId}`)
+        window.location.assign(`${process.env.PUBLIC_URL}/play/${artistId}`);
     }
 
     const handleQuit = (event) => {
         console.log('Quitting');
         window.location.assign(`${process.env.PUBLIC_URL}/`);
+    }
+
+    const disableButtons = () => {
+        setButtonsDisabled(true);
     }
 
     return ( 
@@ -158,10 +163,10 @@ const GamePage = (props) => {
                          handleQuit={handleQuit} score={score} currentSong={currentSong}
                          GAME_TIMER={GAME_TIMER} token={token} pauseTimer={pauseTimer}
                          sleep={sleep} SLEEP_TIMER={SLEEP_TIMER} handlePlayAgain={handlePlayAgain}
-                         handleQuit={handleQuit} />
+                         handleQuit={handleQuit} disableButtons={disableButtons} />
 
             <GameChoices gameChoices={gameChoices} webPlayerActive={webPlayerActive} handleGameButton={handleGameButton}
-                         showAnswers={showAnswers} correctChoice={correctChoice} />
+                         showAnswers={showAnswers} correctChoice={correctChoice} buttonsDisabled={buttonsDisabled} />
         </div>
     );
 }

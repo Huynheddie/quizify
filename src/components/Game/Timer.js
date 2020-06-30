@@ -24,6 +24,7 @@ const Timer = (props) => {
             clearInterval(timerInterval);
             console.log('Game ended!');
             setModalIsOpen(true);
+            props.disableButtons();
             return;
         }
 
