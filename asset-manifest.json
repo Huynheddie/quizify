@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/Quizify/static/css/main.e3957cb6.chunk.css",
-    "main.js": "/Quizify/static/js/main.46cd79bf.chunk.js",
-    "main.js.map": "/Quizify/static/js/main.46cd79bf.chunk.js.map",
-    "runtime-main.js": "/Quizify/static/js/runtime-main.bd4f76ae.js",
-    "runtime-main.js.map": "/Quizify/static/js/runtime-main.bd4f76ae.js.map",
-    "static/js/2.ac9d6f0f.chunk.js": "/Quizify/static/js/2.ac9d6f0f.chunk.js",
-    "static/js/2.ac9d6f0f.chunk.js.map": "/Quizify/static/js/2.ac9d6f0f.chunk.js.map",
-    "index.html": "/Quizify/index.html",
-    "precache-manifest.e42a6c451c3a5807583a61ca55b08d30.js": "/Quizify/precache-manifest.e42a6c451c3a5807583a61ca55b08d30.js",
-    "service-worker.js": "/Quizify/service-worker.js",
-    "static/css/main.e3957cb6.chunk.css.map": "/Quizify/static/css/main.e3957cb6.chunk.css.map",
-    "static/js/2.ac9d6f0f.chunk.js.LICENSE.txt": "/Quizify/static/js/2.ac9d6f0f.chunk.js.LICENSE.txt",
-    "static/media/spotify.png": "/Quizify/static/media/spotify.daf13776.png"
+    "main.css": "/quizify/static/css/main.e3957cb6.chunk.css",
+    "main.js": "/quizify/static/js/main.46cd79bf.chunk.js",
+    "main.js.map": "/quizify/static/js/main.46cd79bf.chunk.js.map",
+    "runtime-main.js": "/quizify/static/js/runtime-main.39325b68.js",
+    "runtime-main.js.map": "/quizify/static/js/runtime-main.39325b68.js.map",
+    "static/js/2.ac9d6f0f.chunk.js": "/quizify/static/js/2.ac9d6f0f.chunk.js",
+    "static/js/2.ac9d6f0f.chunk.js.map": "/quizify/static/js/2.ac9d6f0f.chunk.js.map",
+    "index.html": "/quizify/index.html",
+    "precache-manifest.65a89892e71263d6bbbc94860ea8f14f.js": "/quizify/precache-manifest.65a89892e71263d6bbbc94860ea8f14f.js",
+    "service-worker.js": "/quizify/service-worker.js",
+    "static/css/main.e3957cb6.chunk.css.map": "/quizify/static/css/main.e3957cb6.chunk.css.map",
+    "static/js/2.ac9d6f0f.chunk.js.LICENSE.txt": "/quizify/static/js/2.ac9d6f0f.chunk.js.LICENSE.txt",
+    "static/media/spotify.png": "/quizify/static/media/spotify.daf13776.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.bd4f76ae.js",
+    "static/js/runtime-main.39325b68.js",
     "static/js/2.ac9d6f0f.chunk.js",
     "static/css/main.e3957cb6.chunk.css",
     "static/js/main.46cd79bf.chunk.js"
