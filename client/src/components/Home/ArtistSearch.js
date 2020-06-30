@@ -7,11 +7,14 @@ const ArtistSearch = (props) => {
     const spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(token);
 
-    const [searchTerm, setSearchTerm] = useState('ill');
+    const [searchTerm, setSearchTerm] = useState('yaosobi');
     const [artists, setArtists] = useState([]);
 
     const handleSearchTerm = (event) => {
         setSearchTerm(event.target.value);
+        spotifyApi.search(event.target.value, ['artist'], { limit: 5}).then((response) => {
+            setArtists(response.artists.items);
+        })
     }
 
     const handleSearchSubmit = (event) => {

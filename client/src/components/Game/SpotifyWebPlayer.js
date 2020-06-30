@@ -16,6 +16,7 @@ const SpotifyWebPlayer = ({ songs, token, handleCallback }) => {
     }, []);
 
     useEffect(() => {
+
         if (player) {
             createEventHandlers();
             console.log('Player:', player);
@@ -55,7 +56,7 @@ const SpotifyWebPlayer = ({ songs, token, handleCallback }) => {
     }
 
     const onStateChanged = (state) => {
-        console.log(state);
+        // console.log(state);
         if (state !== null) {
             setPlaying(!playing);
             // spotifyApi.seek(35000);

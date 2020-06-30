@@ -13,10 +13,10 @@ const GamePage = (props) => {
     const [score, setScore] = useState(0);
     const [gameChoices, setGameChoices] = useState([]);
     const [webPlayerActive, setWebPlayerActive] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
     
     useEffect(() => {
         const artist = props.location.state.artistSelection;
+        console.log(`Artist: ${artist.id}`);
         getSongs(artist);
     }, []);
 
@@ -26,6 +26,7 @@ const GamePage = (props) => {
 
         for (const album of artistAlbums.items) {
             const albumTracks = await spotifyApi.getAlbumTracks(album.id);
+            console.log(`album tracks: ${albumTracks}`);
             
             for (const track of albumTracks.items) {
                 allTracks.push(track);
@@ -33,10 +34,11 @@ const GamePage = (props) => {
         }
 
         allTracks = shuffleSongs(allTracks);
+        console.log(allTracks);
         setSongs(allTracks);
 
         let firstSong = await spotifyApi.getTrack(allTracks[0].id);
-        setCurrentSong({ song: firstSong, index: 0})
+        setCurrentSong({ song: firstSong, index: 0});
     }
 
     const shuffleSongs = (songs) => {
@@ -117,7 +119,7 @@ const GamePage = (props) => {
                 <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
             }
 
-            {songs &&
+            {songs.length > 0 &&
                 <div>
                     <SpotifyWebPlayer songs={songs.map(song => song.uri)} token={token} handleCallback={handleCallback} />
                 </div>
