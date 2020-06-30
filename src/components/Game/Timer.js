@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import SpotifyWebApi from 'spotify-web-api-js';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root');
 
 const Timer = (props) => {
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [time, setTime] = useState(props.seconds);
     const [timerInterval, setTimerInterval] = useState();
     let spotifyApi = new SpotifyWebApi();
@@ -19,7 +23,8 @@ const Timer = (props) => {
         if (time === 0) {
             clearInterval(timerInterval);
             console.log('Game ended!');
-            props.history.push('/');
+            setModalIsOpen(true);
+            return;
         }
 
         async function timerSleep() {
@@ -56,6 +61,11 @@ const Timer = (props) => {
     return ( 
         <div>
             <h1>{formatTime(time)}</h1>
+            <Modal isOpen={modalIsOpen} className="finish-game-modal" overlayClassName="finish-game-overlay">
+                <h1>You got {props.score} points!</h1>
+                <button style={{margin: "20px 0px"}} onClick={props.handlePlayAgain}>Play Again</button>
+                <button onClick={props.handleQuit}>Quit</button>
+            </Modal>
         </div>
     );
 }

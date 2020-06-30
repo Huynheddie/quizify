@@ -62,3 +62,19 @@ body {
     background-color: #000;
     color: #1ED760;
 }
+
+.finish-game-modal {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    right: 30%;
+    bottom: 30%;
+    background-color: #64df75;
+    border-radius: 20px;
+    border: 2px solid black;
+    outline: none;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

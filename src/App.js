@@ -8,8 +8,6 @@ import './css/App.css';
 
 
 const App = (props) => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   useLayoutEffect(() => {
     document.title="Quizify"
   }, []);

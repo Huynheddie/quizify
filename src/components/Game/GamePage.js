@@ -8,7 +8,7 @@ import GameDisplay from './GameDisplay';
 
 const GamePage = (props) => {
     const SLEEP_TIMER = 2000;
-    const GAME_TIMER = 300;
+    const GAME_TIMER = 5;
     const spotifyApi = new SpotifyWebApi();
 
     const [token, setToken] = useState();
@@ -137,8 +137,11 @@ const GamePage = (props) => {
         setWebPlayerActive(isPlayerActive);
     }
 
+    const handlePlayAgain = () => {
+        window.location.assign(`../play/${artistId}`)
+    }
+
     const handleQuit = (event) => {
-        // props.history.push('/');
         window.location.assign('/');
     }
 
@@ -153,7 +156,8 @@ const GamePage = (props) => {
             <GameDisplay currentSong={currentSong} webPlayerActive={webPlayerActive}
                          handleQuit={handleQuit} score={score} currentSong={currentSong}
                          GAME_TIMER={GAME_TIMER} token={token} pauseTimer={pauseTimer}
-                         sleep={sleep} SLEEP_TIMER={SLEEP_TIMER} />
+                         sleep={sleep} SLEEP_TIMER={SLEEP_TIMER} handlePlayAgain={handlePlayAgain}
+                         handleQuit={handleQuit} />
 
             <GameChoices gameChoices={gameChoices} webPlayerActive={webPlayerActive} handleGameButton={handleGameButton}
                          showAnswers={showAnswers} correctChoice={correctChoice} />
