@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import logo from '../../images/spotify.png';
 
 const LoginPage = (props) => {
