@@ -66,7 +66,6 @@ const GamePage = (props) => {
 
     useEffect(() => { 
         if (songs && currentSong) {
-            console.log(currentSong);
             startGame();
         }
     }, [currentSong]);
@@ -82,7 +81,10 @@ const GamePage = (props) => {
 
                 while (!filledChoice) {
                     randomSongIndex = Math.floor(Math.random() * (songs.length));
-                    if (randomChoices.findIndex(index => index === randomSongIndex) === -1 && randomSongIndex !== currentSong.index) {
+                    if (randomChoices.indexOf(randomSongIndex) === -1 
+                            && randomChoices.findIndex(index => index !== -1 && songs[index].name === songs[randomSongIndex].name) === -1
+                            && randomSongIndex !== currentSong.index
+                            && songs[randomSongIndex].name !== songs[currentSong.index].name) {
                         filledChoice = true;
                     }
                 }
@@ -95,7 +97,7 @@ const GamePage = (props) => {
         randomChoices[correctIndex] = songs[currentSong.index];
         console.log("Random choice songs: ", randomChoices.map(song => song.name));
         console.log(`Correct choice at index ${correctIndex}, song ${randomChoices[correctIndex].name}`)
-        // console.log(songs);
+        console.log(songs.map(song => song.uri));
         setCorrectChoice(correctIndex);
         setGameChoices(randomChoices);
     }

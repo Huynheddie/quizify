@@ -34,6 +34,7 @@ router.get('/callback', function(req, res) {
       json: true
     }
     request.post(authOptions, function(error, response, body) {
+      // console.log(response)
       var access_token = body.access_token
       let uri = process.env.FRONTEND_URI || config.REDIRECT_URI
       res.redirect(uri + '?access_token=' + access_token)

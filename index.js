@@ -1,5 +1,6 @@
 let express = require('express')
 let cors = require('cors');
+require('dotenv').config();
 const port = process.env.PORT || 3001;
 
 let app = express()
