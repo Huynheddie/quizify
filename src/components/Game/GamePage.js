@@ -138,11 +138,12 @@ const GamePage = (props) => {
     }
 
     const handlePlayAgain = () => {
-        window.location.assign(`../play/${artistId}`)
+        window.location.assign(`${process.env.PUBLIC_URL}/play/${artistId}`)
     }
 
     const handleQuit = (event) => {
-        window.location.assign('/');
+        console.log('Quitting');
+        window.location.assign(`${process.env.PUBLIC_URL}/`);
     }
 
     return ( 

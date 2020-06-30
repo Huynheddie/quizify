@@ -58,7 +58,7 @@ const SpotifyWebPlayer = (props) => {
             await spotifyApi.transferMyPlayback([data.device_id]);      
             let currentPlayback = await spotifyApi.getMyCurrentPlaybackState();
             if (currentPlayback.device.is_restricted) {
-                window.location.assign(`../play/${props.artistId}`);
+                window.location.assign(`${process.env.PUBLIC_URL}/play/${props.artistId}`);
 
             } else {
                 await spotifyApi.play({device_id: data.device_id, uris: props.songs, position_ms: 35000});

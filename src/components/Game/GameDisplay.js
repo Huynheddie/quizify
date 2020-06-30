@@ -6,6 +6,7 @@ const GameDisplay = (props) => {
         <Fragment>
             { props.currentSong && props.webPlayerActive && [
                 <button key="quit" onClick={props.handleQuit}>Quit</button>,
+                <button key="playagain" onClick={props.handlePlayAgain}>Play again</button>,
                 <h1 key="score">Score: {props.score}</h1>,
                 <h1 key="answer">Current song: {props.currentSong.song.name}</h1>,
                 <Timer key="timer" seconds={props.GAME_TIMER} token={props.token} pauseTimer={props.pauseTimer} sleep={props.sleep} 
