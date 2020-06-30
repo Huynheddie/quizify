@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 import SpotifyWebPlayer from './SpotifyWebPlayer';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useParams } from 'react-router-dom';
 import LoadingGif from './LoadingGif';
 import GameChoices from './GameChoices';
 import GameDisplay from './GameDisplay';
@@ -20,12 +20,13 @@ const GamePage = (props) => {
     const [showAnswers, setShowAnswers] = useState(false);
     const [webPlayerActive, setWebPlayerActive] = useState(false);
     const [pauseTimer, setPauseTimer] = useState(false);
+
+    let { artistId } = useParams();
     
     useEffect(() => {
         const token = JSON.parse(localStorage.getItem("access_token"));
         setToken(token);
-        const artist = props.location.state.artistSelection;
-        getSongs(artist);
+        getSongs(artistId);
     }, []);
 
     useEffect(() => {
@@ -34,8 +35,8 @@ const GamePage = (props) => {
         }
     }, [token]);
 
-    async function getSongs(artist) {
-        let artistAlbums = await spotifyApi.getArtistAlbums(artist.id, { limit: 10 });
+    async function getSongs(artistId) {
+        let artistAlbums = await spotifyApi.getArtistAlbums(artistId, { limit: 10 });
         let allTracks = [];
 
         for (const album of artistAlbums.items) {
@@ -146,7 +147,7 @@ const GamePage = (props) => {
             <LoadingGif webPlayerActive={webPlayerActive} />
             
             {songs.length > 0 &&
-                <SpotifyWebPlayer songs={songs.map(song => song.uri)} handleWebPlayerActive={handleWebPlayerActive} />
+                <SpotifyWebPlayer songs={songs.map(song => song.uri)} handleWebPlayerActive={handleWebPlayerActive} artistId={artistId} />
             }
             
             <GameDisplay currentSong={currentSong} webPlayerActive={webPlayerActive}

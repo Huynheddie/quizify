@@ -24,19 +24,28 @@ const Home = (props) => {
         if (token) {
             spotifyApi.setAccessToken(token);
             spotifyApi.getMe().then((response) => {
-                console.log(response);
                 setUser(response);
             });
-            spotifyApi.getMyTopArtists({limit: 5}).then((response) => {
-                console.log(response);
-                setTopArtists(response.items);
+            spotifyApi.getMyTopArtists({limit: 20}).then((response) => {
+                let shuffledArtists = shuffle(response.items);
+                setTopArtists(shuffledArtists.slice(0,5));
             });
         }
     }, [token]);
 
+    const shuffle = (arr) => {
+        for (let i = arr.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i+1));
+            let temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+        return arr;
+    }
+
     return (
         <div style={{height: "100%"}}>
-            <UserInfo user={user} />
+            {/* <UserInfo user={user} /> */}
             <RecommendedArtists topArtists={topArtists} />
             <ArtistSearch />
         </div>

@@ -8,7 +8,7 @@ const Artists = ({ artists }) => {
             {artists.map((artist, index) => (
                 <div className="artist-panel" key={index}>
                     <Link to={{
-                        pathname: "/play",
+                        pathname: `/play/${encodeURIComponent(artist.id)}`,
                         state: {
                             artistSelection: artist
                         }
