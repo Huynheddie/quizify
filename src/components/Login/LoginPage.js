@@ -2,6 +2,9 @@ import React from 'react'
 import logo from '../../images/spotify.png';
 
 const LoginPage = (props) => {
+    useEffect(() => {
+        console.log('hello world!');
+    }, []);
 
     const handleLogin = () => {
         window.location = 'https://quizify-backend.herokuapp.com/login';
