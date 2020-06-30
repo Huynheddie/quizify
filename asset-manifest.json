@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/quizify/static/css/main.1cca5950.chunk.css",
-    "main.js": "/quizify/static/js/main.920ca5b6.chunk.js",
-    "main.js.map": "/quizify/static/js/main.920ca5b6.chunk.js.map",
+    "main.js": "/quizify/static/js/main.f5b4b4be.chunk.js",
+    "main.js.map": "/quizify/static/js/main.f5b4b4be.chunk.js.map",
     "runtime-main.js": "/quizify/static/js/runtime-main.39325b68.js",
     "runtime-main.js.map": "/quizify/static/js/runtime-main.39325b68.js.map",
     "static/js/2.4d2668ba.chunk.js": "/quizify/static/js/2.4d2668ba.chunk.js",
     "static/js/2.4d2668ba.chunk.js.map": "/quizify/static/js/2.4d2668ba.chunk.js.map",
     "index.html": "/quizify/index.html",
-    "precache-manifest.27e6429ff7804b0ce92f4235976db3f2.js": "/quizify/precache-manifest.27e6429ff7804b0ce92f4235976db3f2.js",
+    "precache-manifest.9f5eebbe953b84cec0ae6f5e8ccfddc2.js": "/quizify/precache-manifest.9f5eebbe953b84cec0ae6f5e8ccfddc2.js",
     "service-worker.js": "/quizify/service-worker.js",
     "static/css/main.1cca5950.chunk.css.map": "/quizify/static/css/main.1cca5950.chunk.css.map",
     "static/js/2.4d2668ba.chunk.js.LICENSE.txt": "/quizify/static/js/2.4d2668ba.chunk.js.LICENSE.txt",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.39325b68.js",
     "static/js/2.4d2668ba.chunk.js",
     "static/css/main.1cca5950.chunk.css",
-    "static/js/main.920ca5b6.chunk.js"
+    "static/js/main.f5b4b4be.chunk.js"
   ]
 }
