@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/quizify/static/css/main.1cca5950.chunk.css",
-    "main.js": "/quizify/static/js/main.0ed881df.chunk.js",
-    "main.js.map": "/quizify/static/js/main.0ed881df.chunk.js.map",
+    "main.css": "/quizify/static/css/main.7d9cb8d0.chunk.css",
+    "main.js": "/quizify/static/js/main.1a6d073e.chunk.js",
+    "main.js.map": "/quizify/static/js/main.1a6d073e.chunk.js.map",
     "runtime-main.js": "/quizify/static/js/runtime-main.39325b68.js",
     "runtime-main.js.map": "/quizify/static/js/runtime-main.39325b68.js.map",
     "static/js/2.b8408d07.chunk.js": "/quizify/static/js/2.b8408d07.chunk.js",
     "static/js/2.b8408d07.chunk.js.map": "/quizify/static/js/2.b8408d07.chunk.js.map",
     "index.html": "/quizify/index.html",
-    "precache-manifest.986d6ead82e7aff03cefd906b15a1062.js": "/quizify/precache-manifest.986d6ead82e7aff03cefd906b15a1062.js",
+    "precache-manifest.40106068b8eb615a033186ab500b5c8c.js": "/quizify/precache-manifest.40106068b8eb615a033186ab500b5c8c.js",
     "service-worker.js": "/quizify/service-worker.js",
-    "static/css/main.1cca5950.chunk.css.map": "/quizify/static/css/main.1cca5950.chunk.css.map",
+    "static/css/main.7d9cb8d0.chunk.css.map": "/quizify/static/css/main.7d9cb8d0.chunk.css.map",
     "static/js/2.b8408d07.chunk.js.LICENSE.txt": "/quizify/static/js/2.b8408d07.chunk.js.LICENSE.txt",
     "static/media/spotify.png": "/quizify/static/media/spotify.daf13776.png"
   },
   "entrypoints": [
     "static/js/runtime-main.39325b68.js",
     "static/js/2.b8408d07.chunk.js",
-    "static/css/main.1cca5950.chunk.css",
-    "static/js/main.0ed881df.chunk.js"
+    "static/css/main.7d9cb8d0.chunk.css",
+    "static/js/main.1a6d073e.chunk.js"
   ]
 }
