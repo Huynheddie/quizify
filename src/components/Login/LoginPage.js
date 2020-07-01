@@ -7,8 +7,8 @@ const LoginPage = (props) => {
     }, []);
 
     const handleLogin = () => {
-        // window.location = 'https://quizify-backend.herokuapp.com/login';
-        window.location = 'http://localhost:3001/login';
+        window.location = 'https://quizify-backend.herokuapp.com/login';
+        // window.location = 'http://localhost:3001/login';
     }
 
     return (
