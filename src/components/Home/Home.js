@@ -13,7 +13,8 @@ const Home = (props) => {
     const spotifyApi = new SpotifyWebApi();   
 
     useEffect(() => {
-        const token = JSON.parse(localStorage.getItem("access_token"));
+        // const token = JSON.parse(localStorage.getItem("access_token"));
+        const token = sessionStorage.getItem("access_token");
         if (token === null) {
             props.history.push('/');
         }

@@ -8,7 +8,7 @@ import GameDisplay from './GameDisplay';
 
 const GamePage = (props) => {
     const SLEEP_TIMER = 2000;
-    const GAME_TIMER = 60;
+    const GAME_TIMER = 120;
     const spotifyApi = new SpotifyWebApi();
 
     const [token, setToken] = useState();
@@ -25,19 +25,20 @@ const GamePage = (props) => {
     let { artistId } = useParams();
     
     useEffect(() => {
-        const token = JSON.parse(localStorage.getItem("access_token"));
+        // const token = JSON.parse(localStorage.getItem("access_token"));
+        const token = sessionStorage.getItem("access_token");
         setToken(token);
-        getSongs(artistId);
     }, []);
 
     useEffect(() => {
         if (token) {
             spotifyApi.setAccessToken(token);
+            getSongs(artistId);
         }
     }, [token]);
 
     async function getSongs(artistId) {
-        let artistAlbums = await spotifyApi.getArtistAlbums(artistId, { limit: 10 });
+        let artistAlbums = await spotifyApi.getArtistAlbums(artistId, { limit: 15 });
         let allTracks = [];
 
         for (const album of artistAlbums.items) {
@@ -72,6 +73,13 @@ const GamePage = (props) => {
     }, [currentSong]);
 
     const startGame = () => {
+
+        if (songs.length < 4) {
+            console.log('Not enough songs to play.');
+            props.history.push('/');
+            return;
+        }
+
         let randomChoices = [-1, -1, -1, -1];
         let correctIndex = Math.floor(Math.random() * 4);
 
@@ -93,12 +101,12 @@ const GamePage = (props) => {
             }
         }
 
+        // console.log(songs.map(song => song.name));
         // console.log("Random choice indices: ", randomChoices);
         randomChoices = randomChoices.map(index => songs[index]);
         randomChoices[correctIndex] = songs[currentSong.index];
         // console.log("Random choice songs: ", randomChoices.map(song => song.name));
         // console.log(`Correct choice at index ${correctIndex}, song ${randomChoices[correctIndex].name}`)
-        // console.log(songs.map(song => song.uri));
         setCorrectChoice(correctIndex);
         setGameChoices(randomChoices);
     }
@@ -124,8 +132,9 @@ const GamePage = (props) => {
     const goToNextSong = async (index) => {
         let nextSong = await spotifyApi.getTrack(songs[index].id);
         setCurrentSong({song: nextSong, index: index});
-        let currentPlayback = await spotifyApi.getMyCurrentPlayingTrack();
-        if (currentPlayback.item.duration_ms > 70000) {
+        // let currentPlayback = await spotifyApi.getMyCurrentPlayingTrack();
+        let nextTrack = await spotifyApi.getTrack(nextSong.id);
+        if (nextTrack.duration_ms > 70000) {
             spotifyApi.play({uris: [songs[index].uri], position_ms: 35000});
         } else {
             spotifyApi.play({uris: [songs[index].uri]});
@@ -156,7 +165,7 @@ const GamePage = (props) => {
             <LoadingGif webPlayerActive={webPlayerActive} />
             
             {songs.length > 0 &&
-                <SpotifyWebPlayer songs={songs.map(song => song.uri)} handleWebPlayerActive={handleWebPlayerActive} artistId={artistId} />
+                <SpotifyWebPlayer songs={songs} handleWebPlayerActive={handleWebPlayerActive} artistId={artistId} />
             }
             
             <GameDisplay currentSong={currentSong} webPlayerActive={webPlayerActive}

@@ -12,7 +12,8 @@ const SpotifyWebPlayer = (props) => {
     let spotifyApi = new SpotifyWebApi();    
 
     useEffect(() => {
-        const token = JSON.parse(localStorage.getItem("access_token"));
+        // const token = JSON.parse(localStorage.getItem("access_token"));
+        const token = sessionStorage.getItem("access_token");
         setToken(token);
     }, []);
 
@@ -54,14 +55,17 @@ const SpotifyWebPlayer = (props) => {
 
         const startMusic = async (data) => {
             console.log('Let the music play!');
-            console.log(data.device_id);
+            // console.log(props.songs.map(song => song.name));
+            // console.log(props.songs.map(song => song.uri));
             await spotifyApi.transferMyPlayback([data.device_id]);      
             let currentPlayback = await spotifyApi.getMyCurrentPlaybackState();
+            console.log(currentPlayback);
             if (currentPlayback.device.is_restricted) {
                 window.location.assign(`${process.env.PUBLIC_URL}/play/${props.artistId}`);
 
             } else {
-                await spotifyApi.play({device_id: data.device_id, uris: props.songs, position_ms: 35000});
+                await spotifyApi.setShuffle(false);
+                await spotifyApi.play({device_id: data.device_id, uris: props.songs.map(song => song.uri), position_ms: 35000});
                 await spotifyApi.setVolume(50);
                 props.handleWebPlayerActive(true);
             }

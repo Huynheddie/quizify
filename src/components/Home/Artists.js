@@ -14,13 +14,13 @@ const Artists = ({ artists }) => {
                         }
                     }}>
                         {artist && artist.images[0] && 
-                            <img src={artist.images[0].url} alt="artist profile" width="300" height="300"/>
+                            <img src={artist.images[0].url} alt="artist profile" width="200" height="200"/>
                         }
                         {artist && !artist.images[0] &&
-                            <img src={blankArtist} alt="artist profile" width="300" height="300"/>
+                            <img src={blankArtist} alt="artist profile" width="200" height="200"/>
                         }
                     </Link>
-                    <h1><a href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">{artist.name}</a></h1>
+                    <h2><a href={artist.external_urls.spotify} target="_blank" rel="noopener noreferrer">{artist.name}</a></h2>
                 </div>
             ))}
         </div>

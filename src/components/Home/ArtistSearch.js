@@ -11,8 +11,8 @@ const ArtistSearch = (props) => {
     const [token, setToken] = useState();
 
     useEffect(() => {
-        // const token = sessionStorage.getItem("access_token");
-        const token = JSON.parse(localStorage.getItem("access_token"));
+        // const token = JSON.parse(localStorage.getItem("access_token"));
+        const token = sessionStorage.getItem("access_token");
         setToken(token);
     }, []);
 
