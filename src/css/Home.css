@@ -89,6 +89,12 @@ a:link, a:visited {
 .artist-panel {
     flex: 0 0 33.3333%;
     margin-bottom: 30px;
+    overflow: hidden;
+    max-width: 20%;
+}
+
+.artist-panel h2 {
+  font-size: 2vw;
 }
 
 .game-interface {
