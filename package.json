@@ -2,7 +2,7 @@
   "name": "quizify",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://huynheddie.github.io/quizify/",
+  "homepage" : "https://flamboyant-wiles-012205.netlify.app",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
