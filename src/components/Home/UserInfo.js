@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../css/Home.css';
 
 const UserInfo = ({ user }) => {
     return ( 

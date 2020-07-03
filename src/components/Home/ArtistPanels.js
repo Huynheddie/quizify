@@ -2,7 +2,7 @@ import React from 'react';
 import blankArtist from '../../images/blank-artist.png'
 import { Link } from "react-router-dom";
 
-const Artists = ({ artists }) => {
+const ArtistPanels = ({ artists }) => {
     return ( 
         <div className="artist-grid">
             {artists.map((artist, index) => (
@@ -27,4 +27,4 @@ const Artists = ({ artists }) => {
      );
 }
  
-export default Artists;
+export default ArtistPanels;

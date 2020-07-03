@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react'
-import logo from '../../images/spotify.png';
+import React from 'react'
+import logo from '../images/spotify.png';
 
 const LoginPage = (props) => {
-    useEffect(() => {
-        console.log('hello world!');
-    }, []);
 
     const handleLogin = () => {
-        window.location = 'https://quizify-backend.herokuapp.com/login';
-        // window.location = 'http://localhost:3001/login';
+        // window.location = 'https://quizify-backend.herokuapp.com/login';
+        window.location = 'http://localhost:3001/login';
     }
 
     return (

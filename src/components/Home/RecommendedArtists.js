@@ -5,7 +5,7 @@ import blankArtist from '../../images/blank-artist.png'
 const RecommendedArtists = (props) => {
     return ( 
         <div className="recommended-artists">
-            <h1 style={{marginBottom: "20px"}}>Your Top Artists:</h1>
+            <h1 style={{marginBottom: "20px"}}>Your Recommended Artists:</h1>
             <div className="artist-grid" style={{justifyContent: "space-evenly"}}>
                 {props.topArtists.map((artist, index) => (
                     <div className="artist-panel" style={{flex: "none"}} key={index}>

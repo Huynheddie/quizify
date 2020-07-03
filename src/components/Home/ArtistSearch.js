@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Artists from './Artists';
+import ArtistPanels from './ArtistPanels';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 const ArtistSearch = (props) => {
-    // const token = sessionStorage.getItem("access_token");
     const spotifyApi = new SpotifyWebApi();
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -11,7 +10,6 @@ const ArtistSearch = (props) => {
     const [token, setToken] = useState();
 
     useEffect(() => {
-        // const token = JSON.parse(localStorage.getItem("access_token"));
         const token = sessionStorage.getItem("access_token");
         setToken(token);
     }, []);
@@ -20,7 +18,7 @@ const ArtistSearch = (props) => {
         if (token) {
             spotifyApi.setAccessToken(token);
         }
-    }, [token]);
+    }, [token, spotifyApi]);
 
     useEffect(() => {
         if (searchTerm) {
@@ -28,7 +26,7 @@ const ArtistSearch = (props) => {
                 setArtists(response.artists.items);
             });
         }
-    }, [searchTerm]);
+    }, [searchTerm, spotifyApi]);
 
     const handleSearchTerm = (event) => {
         setSearchTerm(event.target.value);
@@ -53,7 +51,7 @@ const ArtistSearch = (props) => {
                 />
             </form>
             
-            <Artists artists={artists} />
+            <ArtistPanels artists={artists} />
         </div>
     );
 }

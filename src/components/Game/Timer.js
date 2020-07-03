@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useParams } from 'react-router-dom';
 import SpotifyWebApi from 'spotify-web-api-js';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
 const Timer = (props) => {
+
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [time, setTime] = useState(props.seconds);
     const [timerInterval, setTimerInterval] = useState();
+
+    let { artistId } = useParams();
     let spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(props.token);
 
@@ -59,13 +62,22 @@ const Timer = (props) => {
         return `${minutes}:${seconds}`
     }
 
+    const handlePlayAgain = () => {
+        window.location.assign(`${process.env.PUBLIC_URL}/play/${artistId}`);
+    }
+
+    const handleQuit = (event) => {
+        console.log('Quitting');
+        window.location.assign(`${process.env.PUBLIC_URL}/`);
+    }
+
     return ( 
         <div>
             <h1>{formatTime(time)}</h1>
             <Modal isOpen={modalIsOpen} className="finish-game-modal" overlayClassName="finish-game-overlay">
                 <h1>You got {props.score} points!</h1>
-                <button style={{margin: "20px 0px"}} onClick={props.handlePlayAgain}>Play Again</button>
-                <button onClick={props.handleQuit}>Quit</button>
+                <button style={{margin: "20px 0px"}} onClick={handlePlayAgain}>Play Again</button>
+                <button onClick={handleQuit}>Quit</button>
             </Modal>
         </div>
     );

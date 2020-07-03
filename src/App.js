@@ -1,8 +1,8 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Switch, Route, withRouter } from "react-router-dom";
 import Home from './components/Home/Home';
-import PrivateRoute from './components/Routes/PrivateRoute';
-import LoginPage from './components/Login/LoginPage';
+import PrivateRoute from './components/PrivateRoute';
+import LoginPage from './components/LoginPage';
 import GamePage from './components/Game/GamePage';
 import './css/App.css';
 

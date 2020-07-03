@@ -5,6 +5,7 @@ import { withRouter, useParams } from 'react-router-dom';
 import LoadingGif from './LoadingGif';
 import GameChoices from './GameChoices';
 import GameDisplay from './GameDisplay';
+import musicTools from '../../utils/musicTools';
 
 const GamePage = (props) => {
     const SLEEP_TIMER = 2000;
@@ -25,7 +26,6 @@ const GamePage = (props) => {
     let { artistId } = useParams();
     
     useEffect(() => {
-        // const token = JSON.parse(localStorage.getItem("access_token"));
         const token = sessionStorage.getItem("access_token");
         setToken(token);
     }, []);
@@ -38,32 +38,26 @@ const GamePage = (props) => {
     }, [token]);
 
     async function getSongs(artistId) {
-        let artistAlbums = await spotifyApi.getArtistAlbums(artistId, { limit: 15 });
-        let allTracks = [];
+        try {
+            let artistAlbums = await spotifyApi.getArtistAlbums(artistId, { limit: 5 });
+            let allTracks = [];
 
-        for (const album of artistAlbums.items) {
-            const albumTracks = await spotifyApi.getAlbumTracks(album.id);
-            
-            for (const track of albumTracks.items) {
-                allTracks.push(track);
+            for (const album of artistAlbums.items) {
+                const albumTracks = await spotifyApi.getAlbumTracks(album.id);
+                
+                for (const track of albumTracks.items) {
+                    allTracks.push(track);
+                }
             }
+
+            allTracks = musicTools.shuffle(allTracks);
+            setSongs(allTracks);
+
+            let firstSong = await spotifyApi.getTrack(allTracks[0].id);
+            setCurrentSong({ song: firstSong, index: 0})
+        } catch (err) {
+            console.log(err);
         }
-
-        allTracks = shuffleSongs(allTracks);
-        setSongs(allTracks);
-
-        let firstSong = await spotifyApi.getTrack(allTracks[0].id);
-        setCurrentSong({ song: firstSong, index: 0})
-    }
-
-    const shuffleSongs = (songs) => {
-        for (let i = songs.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i+1));
-            let temp = songs[i];
-            songs[i] = songs[j];
-            songs[j] = temp;
-        }
-        return songs;
     }
 
     useEffect(() => { 
@@ -129,31 +123,24 @@ const GamePage = (props) => {
         }
     }
 
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
     const goToNextSong = async (index) => {
-        let nextSong = await spotifyApi.getTrack(songs[index].id);
-        setCurrentSong({song: nextSong, index: index});
-        // let currentPlayback = await spotifyApi.getMyCurrentPlayingTrack();
-        let nextTrack = await spotifyApi.getTrack(nextSong.id);
-        if (nextTrack.duration_ms > 70000) {
-            spotifyApi.play({uris: [songs[index].uri], position_ms: 35000});
-        } else {
-            spotifyApi.play({uris: [songs[index].uri]});
+        try {
+            let nextSong = await spotifyApi.getTrack(songs[index].id);
+            setCurrentSong({song: nextSong, index: index});
+            if (nextSong.duration_ms > 70000) {
+                spotifyApi.play({uris: [songs[index].uri], position_ms: 35000});
+            } else {
+                spotifyApi.play({uris: [songs[index].uri]});
+            }
+        } catch (err) {
+            console.log(err);
         }
     }
 
-    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
     const handleWebPlayerActive = (isPlayerActive) => {
         setWebPlayerActive(isPlayerActive);
-    }
-
-    const handlePlayAgain = () => {
-        window.location.assign(`${process.env.PUBLIC_URL}/play/${artistId}`);
-    }
-
-    const handleQuit = (event) => {
-        console.log('Quitting');
-        window.location.assign(`${process.env.PUBLIC_URL}/`);
     }
 
     const disableButtons = () => {
@@ -168,11 +155,9 @@ const GamePage = (props) => {
                 <SpotifyWebPlayer songs={songs} handleWebPlayerActive={handleWebPlayerActive} artistId={artistId} />
             }
             
-            <GameDisplay currentSong={currentSong} webPlayerActive={webPlayerActive}
-                         handleQuit={handleQuit} score={score} currentSong={currentSong}
-                         GAME_TIMER={GAME_TIMER} token={token} pauseTimer={pauseTimer}
-                         sleep={sleep} SLEEP_TIMER={SLEEP_TIMER} handlePlayAgain={handlePlayAgain}
-                         handleQuit={handleQuit} disableButtons={disableButtons} />
+            <GameDisplay currentSong={currentSong} webPlayerActive={webPlayerActive} score={score} 
+                         GAME_TIMER={GAME_TIMER} pauseTimer={pauseTimer} token={token}
+                         sleep={sleep} SLEEP_TIMER={SLEEP_TIMER} disableButtons={disableButtons} />
 
             <GameChoices gameChoices={gameChoices} webPlayerActive={webPlayerActive} handleGameButton={handleGameButton}
                          showAnswers={showAnswers} correctChoice={correctChoice} buttonsDisabled={buttonsDisabled} />
