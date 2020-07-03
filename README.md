@@ -12,16 +12,16 @@ A web game where users listen to their favorite artists and guess the title of s
 
 # Images
 ## Login Page
-![Image](images/login-page.jpg)
+![Image](images/login-page.JPG)
 
 ## Home Page
-![Image](images/home-page.jpg)
+![Image](images/home-page.JPG)
 
 ## Home Page with Artist Search
-![Image](images/home-page-search.jpg)
+![Image](images/home-page-search.JPG)
 
 ## Game Page
-![Image](images/game-page.jpg)
+![Image](images/game-page.JPG)
 
 ## Game Finished
-![Image](./images/game-page-finish.jpg)
+![Image](images/game-page-finish.JPG)
