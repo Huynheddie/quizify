@@ -6,6 +6,7 @@ A web game where users listen to their favorite artists and guess the title of s
 1. [React Router](https://www.npmjs.com/package/react-router)
 2. [React Modal](https://www.npmjs.com/package/react-modal)
 3. [React Spotify Web Playback](https://www.npmjs.com/package/react-spotify-web-playback)
+4. [React GitHub Corner](https://www.npmjs.com/package/react-github-corner)
 
 # Supported Browsers
 * Google Chrome
