@@ -24,4 +24,4 @@ A web game where users listen to their favorite artists and guess the title of s
 ![Image](images/game-page.JPG)
 
 ## Game Finished
-![Image](images/game-page-finish.JPG)
+![Image](images/game-page-finished.JPG)
