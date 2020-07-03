@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from '../images/spotify.png';
+import GithubCorner from 'react-github-corner';
 
 const LoginPage = (props) => {
 
@@ -10,6 +11,7 @@ const LoginPage = (props) => {
 
     return (
         <div className="login-page">
+            <GithubCorner size="120" octoColor="#1ED760" href="https://github.com/huynheddie/quizify"/>
             <div className="banner">
                 <h1 className="banner-text">Quizify</h1>
                 <img style={{paddingLeft: "30px"}} alt="logo" src={logo} width="100" height="100"/> 
