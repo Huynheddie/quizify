@@ -11,7 +11,7 @@ html {
     height: 100%;
     width: 100%;
     background-color: #3D3D3D;
-    background-image: linear-gradient(to bottom, #808080, rgb(22, 70, 38));
+    background-image: linear-gradient(#e6e6e6, 70%,#03ce4a);
     background-repeat: no-repeat;
     background-attachment: fixed;
     font-family: "Fredoka One";
