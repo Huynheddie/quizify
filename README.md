@@ -1,4 +1,4 @@
-# Quizify Front-End
+# Quizify
 A web game where users listen to their favorite artists and guess the title of songs!  
 **Currently requires a Spotify Premium account to work properly.**
 
